@@ -1,0 +1,108 @@
+{
+  "entities": {
+    "user": {
+      "title": "User",
+      "description": "User profile metadata",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "preferredCurrency": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "email"]
+    },
+    "income": {
+      "title": "Income",
+      "description": "Income records for tracking client cash inflow",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "category": { "type": "string", "enum": ["Salary", "Freelancing", "Business", "Investments", "Other"] },
+        "amount": { "type": "number" },
+        "date": { "type": "string", "format": "date" },
+        "description": { "type": "string" },
+        "recurring": { "type": "boolean" }
+      },
+      "required": ["userId", "category", "amount", "date"]
+    },
+    "expense": {
+      "title": "Expense",
+      "description": "Expense records for tracking cash outflow",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "category": { "type": "string", "enum": ["Food", "Transport", "Shopping", "Rent", "EMI", "Entertainment", "Education", "Healthcare", "Bills", "Other"] },
+        "amount": { "type": "number" },
+        "date": { "type": "string", "format": "date" },
+        "description": { "type": "string" },
+        "recurring": { "type": "boolean" }
+      },
+      "required": ["userId", "category", "amount", "date"]
+    },
+    "budget": {
+      "title": "Budget",
+      "description": "Monthly category spending limit configuration",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "category": { "type": "string" },
+        "limit": { "type": "number" },
+        "month": { "type": "string", "description": "Format YYYY-MM" }
+      },
+      "required": ["userId", "category", "limit", "month"]
+    },
+    "saving": {
+      "title": "Saving Goal",
+      "description": "Savings goals tracking visual targets and progress",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "goalName": { "type": "string" },
+        "targetAmount": { "type": "number" },
+        "savedAmount": { "type": "number" },
+        "deadline": { "type": "string", "format": "date" }
+      },
+      "required": ["userId", "goalName", "targetAmount", "savedAmount"]
+    },
+    "investment": {
+      "title": "Investment",
+      "description": "Investment trackers evaluating values and returns",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "investmentType": { "type": "string", "enum": ["Stocks", "Mutual Funds", "Gold", "Cryptocurrency", "Fixed Deposit", "Real Estate"] },
+        "investedAmount": { "type": "number" },
+        "currentValue": { "type": "number" },
+        "purchaseDate": { "type": "string", "format": "date" }
+      },
+      "required": ["userId", "investmentType", "investedAmount", "currentValue"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/user" },
+      "description": "User documents mapping uid to user metadata"
+    },
+    "/income/{incomeId}": {
+      "schema": { "$ref": "#/entities/income" },
+      "description": "Income records scoped by userId"
+    },
+    "/expenses/{expenseId}": {
+      "schema": { "$ref": "#/entities/expense" },
+      "description": "Expense records scoped by userId"
+    },
+    "/budgets/{budgetId}": {
+      "schema": { "$ref": "#/entities/budget" },
+      "description": "Category budget items scoped by userId"
+    },
+    "/savings/{goalId}": {
+      "schema": { "$ref": "#/entities/saving" },
+      "description": "Savings targets scoped by userId"
+    },
+    "/investments/{investmentId}": {
+      "schema": { "$ref": "#/entities/investment" },
+      "description": "Investment portfolio records scoped by userId"
+    }
+  }
+}

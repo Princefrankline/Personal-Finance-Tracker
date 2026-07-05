@@ -1,0 +1,6 @@
+{
+  "name": "Personal Finance Tracker",
+  "description": "A modern, fully functional dashboard to track income, expenses, budgets, savings, investments, and get AI-powered financial insights.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
